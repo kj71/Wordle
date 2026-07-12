@@ -2,9 +2,6 @@
 
 A Wordle clone built with Jetpack Compose.
 
-## System Design
-The system design for this project is documented in [Wordle System Design.drawio.html](./Wordle%20System%20Design.drawio.html).
-
 ### Requirements
 - **Target**: Guess a randomly selected 6-letter word.
 - **Attempts**: 5 chances.
