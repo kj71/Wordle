@@ -39,84 +39,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WordleTheme {
-                Wordle(
+                WordleNavigator(
                     modifier = Modifier
                 )
             }
         }
-    }
-}
-
-@Composable
-fun Wordle(
-    viewModel: WordleViewModel = viewModel(),
-    modifier: Modifier = Modifier
-) {
-    val wordleUiState by viewModel.wordleUiState.collectAsState()
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        TextField(
-            value = wordleUiState.currentTypedWord,
-            onValueChange = { viewModel.updateCurrentGuess(it) },
-            singleLine = true,
-            keyboardActions = KeyboardActions(
-                onDone = {viewModel.checkSubmittedWord()},
-            ),
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done
-            ),
-            enabled = viewModel.isGamePending(),
-            supportingText = {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = wordleUiState.errorMessage,
-                    color = Color.Red
-                )
-            },
-        )
-        Column(
-            modifier = Modifier.padding(top = 50.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Past Guesses",
-            )
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.padding(top = 20.dp)
-            ) {
-                items(items = wordleUiState.pastGuesses) { pastGuess ->
-                    LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        modifier = Modifier
-                    ) {
-                        items(count = pastGuess.word.length) { index ->
-                            Text(
-                                text = pastGuess.word[index].toString(),
-                                fontSize = 45.sp,
-                                textAlign = TextAlign.Center,
-                                color = Color.White,
-                                modifier = Modifier
-                                    .background(color = pastGuess.colorMapping[index])
-                                    .height(50.dp)
-                                    .width(50.dp)
-                            )
-                        }
-
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    WordleTheme {
-        Wordle()
     }
 }
